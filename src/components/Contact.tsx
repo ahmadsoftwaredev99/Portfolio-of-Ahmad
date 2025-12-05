@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,22 +6,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: false,
+      easing: "ease-out-cubic",
+      offset: 100,
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     toast({
       title: "Message sent!",
@@ -37,7 +47,7 @@ export const Contact = () => {
   ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -45,7 +55,8 @@ export const Contact = () => {
     <section id="contact" className="py-20 md:py-32 bg-muted/30">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
+          {/* Heading */}
+          <div className="text-center mb-16" data-aos="fade-up">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Get In <span className="text-gradient">Touch</span>
             </h2>
@@ -54,9 +65,19 @@ export const Contact = () => {
             </p>
           </div>
 
-          <Card className="p-8 glass-effect animate-fade-in-up">
+          {/* Main Card */}
+          <Card
+            className="p-8 glass-effect"
+            data-aos="zoom-in"
+            data-aos-delay="150"
+          >
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
+              {/* Name */}
+              <div
+                className="space-y-2"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
                 <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
@@ -68,7 +89,12 @@ export const Contact = () => {
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* Email */}
+              <div
+                className="space-y-2"
+                data-aos="fade-up"
+                data-aos-delay="250"
+              >
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -81,9 +107,15 @@ export const Contact = () => {
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* Message */}
+              <div
+                className="space-y-2"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
                 <Label htmlFor="message">Message</Label>
-                <Textarea style={{resize:'none'}}
+                <Textarea
+                  style={{ resize: "none" }}
                   id="message"
                   name="message"
                   placeholder="Tell me about your project..."
@@ -94,27 +126,37 @@ export const Contact = () => {
                 />
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Send Message
-                  </>
-                )}
-              </Button>
+              {/* Submit Button */}
+              <div data-aos="fade-up" data-aos-delay="350">
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-5 w-5" />
+                      Send Message
+                    </>
+                  )}
+                </Button>
+              </div>
             </form>
 
-            <div className="mt-8 pt-8 border-t border-border text-center">
-              <p className="text-muted-foreground mb-2">Or email me directly at</p>
+            {/* Footer */}
+            <div
+              className="mt-8 pt-8 border-t border-border text-center"
+              data-aos="fade-in"
+              data-aos-delay="400"
+            >
+              <p className="text-muted-foreground mb-2">
+                Or email me directly at
+              </p>
               <a
-                href="mailto:john.doe@example.com"
+                href="mailto:ahmadmdev33@gmail.com"
                 className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
               >
                 <Mail className="h-4 w-4" />
